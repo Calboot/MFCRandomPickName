@@ -32,6 +32,7 @@ void CMFCRandomPickNameDlg::DoDataExchange(CDataExchange* pDX)
 	CDHtmlDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_STATIC_TEXT, c_text);
 	DDX_Control(pDX, IDC_STATIC_TEXT_ROUND, c_text_round);
+	DDX_Control(pDX, IDC_CHECK1_ALLOW_REPETITION, c_check_allow_peretition);
 }
 
 BEGIN_MESSAGE_MAP(CMFCRandomPickNameDlg, CDHtmlDialog)
@@ -105,7 +106,7 @@ HRESULT CMFCRandomPickNameDlg::OnButtonCancel(IHTMLElement* /*pElement*/)
 
 CString v_zp71[42], v_tstr, v_staticstr,v_rstr;
 bool v_init,v_picked[42];
-short v_round,v_tnum;
+short v_round,v_tnum,v_allow_repetition;
 
 void f_init() {
 	v_zp71[0] = _T("万好");
@@ -172,10 +173,14 @@ void CMFCRandomPickNameDlg::OnBnClickedMfcbutton1()
 		f_init();
 	}
 
+	v_allow_repetition = c_check_allow_peretition.GetCheck();
+
 	v_tnum = rand() % 42;
-	while (v_picked[v_tnum]) {
+	while (v_picked[v_tnum] && v_allow_repetition==BST_UNCHECKED) {
 		v_tnum = rand() % 42;
 	}
+
+	v_picked[v_tnum] = true;
 
 	v_tstr = _T("");
 	v_tstr.Format(_T("%d%s%s"),v_tnum+1, v_staticstr, v_zp71[v_tnum]);

@@ -37,4 +37,5 @@ public:
 	afx_msg void OnBnClickedMfcbutton1();
 	CStatic c_text;
 	CStatic c_text_round;
+	CButton c_check_allow_peretition;
 };
